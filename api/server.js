@@ -11,9 +11,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/react', (req, res) => {
-  res.setHeader('Content-Type', 'text/html');
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  console.log(res);
 });
 
 app.listen(8080);
