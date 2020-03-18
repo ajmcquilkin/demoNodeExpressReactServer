@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const app = express();
 
 // https://dev.to/loujaybee/using-create-react-app-with-express
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(morgan('dev'));
 
@@ -47,6 +47,6 @@ app.get('/blocked', cas.block, (req, res) => {
 
 app.get('/logout', cas.logout);
 
-app.get('/react', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/react', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
