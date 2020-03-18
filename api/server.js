@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const app = express();
 
 // https://dev.to/loujaybee/using-create-react-app-with-express
+// This middleware allows the react files stored within the build directory locally to be served on a /build URL on the site
 app.use('/build', express.static(path.join(__dirname, 'build')));
 
 app.use(morgan('dev'));
@@ -52,6 +53,7 @@ app.get('/blocked', cas.block, (req, res) => {
 // Will log the user out of CAS and remove web token
 app.get('/logout', cas.logout);
 
+// Will display a react app based on a static interface being served from above middleware
 app.get('/react', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
