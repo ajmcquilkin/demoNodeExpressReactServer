@@ -1,10 +1,9 @@
 var express = require('express');
 var path = require('path');
-var serveStatic = require('serve-static');
 
 const app = express();
 
-// app.use(serveStatic('/build', { 'index': 'index.html' }));
+// https://dev.to/loujaybee/using-create-react-app-with-express
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', (req, res) => {
