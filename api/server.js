@@ -23,9 +23,9 @@ app.use(session({
 }));
 
 const cas = new CASAuthentication({
-  cas_url: 'https://login.dartmouth.edu/cas',
-  service_url: 'http://localhost:8080',
-  // session_info: true,
+  cas_url: 'https://login.dartmouth.edu/cas', // Dartmouth CAS server
+  service_url: 'http://localhost:8080', // Where to return to after authentication
+  session_info: true, // Should the session hold user information to be accessed later?
 });
 
 app.listen(8080);
@@ -33,18 +33,23 @@ console.log('listening on: 8080');
 
 // CAS based off cas-authentication package (NPM)
 // https://www.npmjs.com/package/cas-authentication
+// Uses CAS as middleware (middle param of get)
+
+// URL to go to to automatically trigger a redirect to Dartmouth CAS server
 app.post('/auth/cas', cas.bounce_redirect);
 
-// Will redirect to CAS authentication if not authenticated
+// Will redirect to CAS bounce_redirect URL and then to Dartmouth CAS if not authenticated
 app.get('/', cas.bounce, (req, res) => {
   res.send('Hello!');
 });
 
+// Cannot see this URL unless authenticated
 app.get('/blocked', cas.block, (req, res) => {
   res.send(`Hi ${req.session.cas_user.split(" ")[0]}! You can only see this if you\'re authenticated!`);
-  console.log('session user', req.session.cas_user); // Holds session username ("First M. Last@DARMOUTH.EDU")
+  console.log('session user', req.session); // Holds session username ("First M. Last@DARMOUTH.EDU") and a LOT of other stuff (netid, name, and misc technical things)
 })
 
+// Will log the user out of CAS and remove web token
 app.get('/logout', cas.logout);
 
 // app.get('/react', (req, res) => {
