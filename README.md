@@ -174,9 +174,7 @@ To serve the React app on the Express server, the app must first be built. Befor
 
 ```json
 {
-    ...
     "homepage": "/static",
-    ...
 }
 ```
 
